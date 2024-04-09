@@ -71,22 +71,12 @@ class_name ::= LITERAL {
 
 class_definition ::= AT LITERAL attribute* EQ class_name (COLON doc)? LBRACKET field* RBRACKET
 
-//attribute ::= (base_attribute | size_attribute | color_attribute | model_attribute)
 attribute ::= LITERAL LPAR (param_number3 | param_literals | param_dicts) RPAR
-
-// parent ::= LITERAL
-// base_attribute ::= BASE_ATTR LPAR parent (COMMA parent)* RPAR
 
 number3 ::= number number number
 param_number3 ::= number3 (COMMA number3)*
 param_literals ::= LITERAL (COMMA LITERAL)*
 param_dicts ::= (advanced_model_attribute | simple_model_attribute)
-
-// position ::= INTEGER INTEGER INTEGER
-// size_attribute ::= LITERAL LPAR position COMMA position RPAR
-// color ::= number number number
-// color_attribute ::= LITERAL LPAR color RPAR
-// model_attribute ::= LITERAL LPAR (advanced_model_attribute | simple_model_attribute) RPAR
 
 match_field ::= LITERAL
 match_mask ::= INTEGER
