@@ -1,0 +1,41 @@
+<idea-plugin>
+    <id>fgd</id>
+    <name>Fgd</name>
+
+    <vendor email="dsvensson@gmail.com" url="https://github.com/dsvensson">Daniel Svensson</vendor>
+
+    <description><![CDATA[Language support for working with FGD files.]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType
+                name="FGD [Plugin: fgd]"
+                implementationClass="org.intellij.sdk.language.FgdFileType"
+                fieldName="INSTANCE"
+                language="fgd"
+                extensions="fgd"/>
+        <lang.parserDefinition
+                language="fgd"
+                implementationClass="org.intellij.sdk.language.FgdParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="fgd"
+                implementationClass="org.intellij.sdk.language.FgdSyntaxHighlighterFactory"/>
+        <lang.documentationProvider
+                language="fgd"
+                implementationClass="org.intellij.sdk.language.FgdDocumentationProvider"/>
+        <colorSettingsPage
+                implementation="org.intellij.sdk.language.FgdColorSettingsPage"/>
+        <completion.contributor
+                language="fgd"
+                order="first"
+                implementationClass="org.intellij.sdk.language.FgdCompletionContributor"/>
+        <gotoSymbolContributor
+                implementation="org.intellij.sdk.language.FgdChooseByNameContributor"/>
+        <lang.psiStructureViewFactory
+                language="fgd"
+                implementationClass="org.intellij.sdk.language.FgdStructureViewFactory"/>
+        <codeInsight.inlayProvider language="fgd" implementationClass="org.intellij.sdk.language.FgdColorInlayProvider"/>
+        <psi.referenceContributor language="fgd" implementation="org.intellij.sdk.language.FgdReferenceContributor"/>
+        <typedHandler implementation="org.intellij.sdk.language.FgdTypingHandler"/>
+    </extensions>
+</idea-plugin>

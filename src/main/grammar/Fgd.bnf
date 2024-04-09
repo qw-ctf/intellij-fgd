@@ -1,0 +1,129 @@
+{
+  parserClass="org.intellij.sdk.language.parser.FgdParser"
+  //parserUtilClass="org.intellij.sdk.language.parser.FgdParserUtil"
+  parserUtilClass="com.intellij.lang.parser.GeneratedParserUtilBase"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Fgd"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.intellij.sdk.language.psi"
+  psiImplPackage="org.intellij.sdk.language.psi.impl"
+
+  elementTypeHolderClass="org.intellij.sdk.language.psi.FgdTypes"
+  elementTypeClass="org.intellij.sdk.language.psi.FgdElementType"
+  tokenTypeClass="org.intellij.sdk.language.psi.FgdTokenType"
+
+  psiImplUtilClass="org.intellij.sdk.language.psi.impl.FgdPsiImplUtil"
+
+  tokens=[
+    COMMA=","
+    COLON=":"
+    EQ="="
+    AMP="&"
+    ARROW="->"
+    LBRACKET="["
+    RBRACKET="]"
+    LPAR="("
+    RPAR=")"
+    LDCURL="{{"
+    RDCURL="}}"
+    LCURL="{"
+    RCURL="}"
+    DQUOT="\""
+    AT="@"
+    WS='regexp:\s+'
+    COMMENT='regexp://.*'
+
+    STRING='regexp:"[^"]+"'
+    INTEGER='regexp:-?[0-9]+'
+    FLOAT='regexp:-?[0-9]+(\.[0-9]+)?'
+
+    STRING_TYPE='regexp:string'
+    INTEGER_TYPE='regexp:integer'
+    FLOAT_TYPE='regexp:float'
+    CHOICES_TYPE='regexp:[Cc]hoices'
+    COLOR_TYPE='regexp:color255'
+    TARGET_SRC_TYPE='regexp:target_source'
+    TARGET_DST_TYPE='regexp:target_destination'
+
+    // BASE_ATTR='regexp:base'
+
+    FLAGS_TYPE='regexp:[Ff]lags'
+    LITERAL='regexp:[_a-zA-Z][_a-zA-Z0-9]*'
+  ]
+}
+
+fgdFile ::= item_*
+
+private item_ ::= class_definition
+
+any_value ::= INTEGER | FLOAT | STRING
+number ::= INTEGER | FLOAT
+
+doc ::= STRING
+description ::= STRING
+
+class_name ::= LITERAL {
+    mixin="org.intellij.sdk.language.FgdSymbolMixin"
+    methods=[getName setName getNameIdentifier]
+}
+
+class_definition ::= AT LITERAL attribute* EQ class_name (COLON doc)? LBRACKET field* RBRACKET
+
+//attribute ::= (base_attribute | size_attribute | color_attribute | model_attribute)
+attribute ::= LITERAL LPAR (param_number3 | param_literals | param_dicts) RPAR
+
+// parent ::= LITERAL
+// base_attribute ::= BASE_ATTR LPAR parent (COMMA parent)* RPAR
+
+number3 ::= number number number
+param_number3 ::= number3 (COMMA number3)*
+param_literals ::= LITERAL (COMMA LITERAL)*
+param_dicts ::= (advanced_model_attribute | simple_model_attribute)
+
+// position ::= INTEGER INTEGER INTEGER
+// size_attribute ::= LITERAL LPAR position COMMA position RPAR
+// color ::= number number number
+// color_attribute ::= LITERAL LPAR color RPAR
+// model_attribute ::= LITERAL LPAR (advanced_model_attribute | simple_model_attribute) RPAR
+
+match_field ::= LITERAL
+match_mask ::= INTEGER
+match_value ::= STRING
+match_guard ::= match_field AMP match_mask ARROW match_value COMMA
+advanced_model_attribute ::= LDCURL match_guard* match_value RDCURL
+
+key ::= STRING
+value ::= any_value
+pair ::= key COLON value
+pairs ::= pair (COMMA pair)*
+simple_model_attribute ::= LCURL pairs RCURL
+
+field_name ::= LITERAL
+field ::= string_field | integer_field | float_field | choices_field | flags_field | color_field | target_src_field | target_dst_field
+
+string_default ::= STRING
+string_field ::= field_name LPAR STRING_TYPE RPAR COLON doc (COLON string_default? (COLON description)?)?
+
+integer_default ::= INTEGER
+integer_field ::= field_name LPAR INTEGER_TYPE RPAR COLON doc (COLON integer_default? (COLON description)?)?
+
+float_field ::= field_name LPAR FLOAT_TYPE RPAR COLON doc (COLON string_default? (COLON description)?)?
+
+color_field ::= field_name LPAR COLOR_TYPE RPAR COLON doc (COLON string_default? (COLON description)?)?
+
+target_src_field ::= field_name LPAR TARGET_SRC_TYPE RPAR COLON doc (COLON string_default? (COLON description)?)?
+
+target_dst_field ::= field_name LPAR TARGET_DST_TYPE RPAR COLON doc (COLON string_default? (COLON description)?)?
+
+choice_key ::= INTEGER
+choice_name ::= STRING
+choice ::= choice_key COLON choice_name
+choices_field ::= field_name LPAR CHOICES_TYPE RPAR (COLON doc (COLON integer_default)?)? EQ LBRACKET choice* RBRACKET
+
+flag_bit ::= INTEGER
+flag_name ::= STRING
+flag_checked ::= INTEGER
+flags ::= flag_bit COLON flag_name COLON flag_checked (COLON doc)?
+flags_field ::= field_name LPAR FLAGS_TYPE RPAR EQ LBRACKET flags* RBRACKET
