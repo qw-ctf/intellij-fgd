@@ -6,7 +6,8 @@ import com.intellij.ide.structureView.StructureViewTreeElement
 import com.intellij.ide.util.treeView.smartTree.Sorter
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiFile
-import org.intellij.sdk.language.psi.FgdClassName
+import org.intellij.sdk.language.psi.FgdClassDefinition
+import org.intellij.sdk.language.psi.FgdField
 import org.intellij.sdk.language.psi.FgdFile
 
 class FgdStructureViewModel(editor: Editor?, psiFile: PsiFile) :
@@ -14,15 +15,16 @@ class FgdStructureViewModel(editor: Editor?, psiFile: PsiFile) :
 	init {
 		withSuitableClasses(
 			FgdFile::class.java,
-			FgdClassName::class.java,
+			FgdClassDefinition::class.java,
+			FgdField::class.java,
 		).withSorters(Sorter.ALPHA_SORTER)
 	}
 
 	override fun isAlwaysShowsPlus(element: StructureViewTreeElement): Boolean {
-		return false
+		return element.value is FgdClassDefinition
 	}
 
 	override fun isAlwaysLeaf(element: StructureViewTreeElement): Boolean {
-		return element.value is FgdClassName
+		return element.value is FgdField
 	}
 }
