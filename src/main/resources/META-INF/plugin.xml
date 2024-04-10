@@ -34,8 +34,13 @@
         <lang.psiStructureViewFactory
                 language="fgd"
                 implementationClass="org.intellij.sdk.language.FgdStructureViewFactory"/>
-        <codeInsight.inlayProvider language="fgd" implementationClass="org.intellij.sdk.language.FgdColorInlayProvider"/>
-        <psi.referenceContributor language="fgd" implementation="org.intellij.sdk.language.FgdReferenceContributor"/>
-        <typedHandler implementation="org.intellij.sdk.language.FgdTypingHandler"/>
+        <codeInsight.inlayProvider
+                language="fgd"
+                implementationClass="org.intellij.sdk.language.FgdColorInlayProvider"/>
+        <psi.referenceContributor
+                language="fgd"
+                implementation="org.intellij.sdk.language.FgdReferenceContributor"/>
+        <typedHandler
+                implementation="org.intellij.sdk.language.FgdTypingHandler"/>
     </extensions>
 </idea-plugin>

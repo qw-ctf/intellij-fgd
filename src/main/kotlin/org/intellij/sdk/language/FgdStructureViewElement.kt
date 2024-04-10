@@ -43,7 +43,6 @@ class FgdStructureViewElement(e: PsiElement) : PsiTreeElementBase<PsiElement?>(e
 		}
 	}
 
-
 	override fun getChildrenBase(): MutableCollection<StructureViewTreeElement> = element.let { elem ->
 		when (elem) {
 			is FgdFile ->

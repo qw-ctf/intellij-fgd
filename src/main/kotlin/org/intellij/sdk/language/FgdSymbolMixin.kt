@@ -27,8 +27,6 @@ abstract class FgdSymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node), PsiNa
 	}
 
 	private fun getNameIdentifier(): PsiElement? {
-		// Assuming the child representing the name conforms to a specific element type.
-		// This would be a direct child in this example, but could be more complex depending on your PSI structure.
 		return findChildByType(FgdTypes.LITERAL)
 	}
 }

@@ -34,6 +34,7 @@ class FgdColorInlayProvider : InlayHintsProvider<NoSettings> {
 		}
 		return elem.paramNumber3?.number3List?.first()?.numberList
 	}
+
 	override fun getCollectorFor(file: PsiFile, editor: Editor, settings: NoSettings, sink: InlayHintsSink): InlayHintsCollector {
 		return object : FactoryInlayHintsCollector(editor) {
 			override fun collect(element: PsiElement, editor: Editor, sink: InlayHintsSink): Boolean {
@@ -63,13 +64,8 @@ class FgdColorInlayProvider : InlayHintsProvider<NoSettings> {
 	override fun createConfigurable(settings: NoSettings): ImmediateConfigurable {
 		return object : ImmediateConfigurable {
 			override fun createComponent(listener: ChangeListener): JComponent {
-				// Create a panel or other component if you have settings to configure.
-				// Since there are no settings in this example, we return a placeholder component.
 				return JPanel()
 			}
-
-			// Implement any necessary methods to adjust settings.
-			// If there are no settings, these can be left empty.
 		}
 	}
 

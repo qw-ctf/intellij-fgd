@@ -9,9 +9,9 @@ class FgdReferenceContributor : PsiReferenceContributor() {
 	private val onBaseClass = psiElement(FgdParamLiterals::class.java)
 
 	override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-        /*
-        registrar.registerReferenceProvider(onBaseClass, FgdBaseClassReferenceProvider())
-        registrar.registerReferenceProvider(psiElement(FgdClassName::class.java), FgdBaseClassReferenceProvider())
-         */
+		/*
+		registrar.registerReferenceProvider(onBaseClass, FgdBaseClassReferenceProvider())
+		registrar.registerReferenceProvider(psiElement(FgdClassName::class.java), FgdBaseClassReferenceProvider())
+		 */
 	}
 }
