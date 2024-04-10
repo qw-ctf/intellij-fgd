@@ -71,7 +71,10 @@ class_name ::= LITERAL {
 
 class_definition ::= AT LITERAL attribute* EQ class_name (COLON doc)? LBRACKET field* RBRACKET
 
-attribute ::= LITERAL LPAR (param_number3 | param_literals | param_dicts) RPAR
+attribute ::= LITERAL LPAR (param_number3 | param_literals | param_dicts) RPAR {
+   mixin="org.intellij.sdk.language.psi.impl.FgdReferenceMixin"
+   methods=[getName setName getNameIdentifier]
+}
 
 number3 ::= number number number
 param_number3 ::= number3 (COMMA number3)*

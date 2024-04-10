@@ -9,7 +9,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import org.intellij.sdk.language.psi.FgdFile
 import org.intellij.sdk.language.psi.FgdTypes
 
-abstract class FgdSymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node), PsiNamedElement {
+abstract class FgdReferenceMixin(node: ASTNode) : ASTWrapperPsiElement(node), PsiNamedElement {
 	override fun getName(): String? {
 		return getNameIdentifier()?.text
 	}
