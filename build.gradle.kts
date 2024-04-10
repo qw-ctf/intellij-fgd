@@ -15,7 +15,7 @@ repositories {
 	mavenCentral()
 }
 
-sourceSets["main"].java.srcDirs("src/main/gen")
+sourceSets["main"].java.srcDirs("src/main/gen/lexer", "src/main/gen/parser")
 
 intellij {
 	version.set("2023.3.3")
@@ -35,20 +35,20 @@ spotless {
 					"ktlint_standard_no-wildcard-imports" to "disabled",
 				),
 			)
-		isEnforceCheck = "true".equals(System.getProperty("CI")) //Enforce formatting whwn in CI
+		isEnforceCheck = "true" == System.getProperty("CI")
 	}
 }
 
 tasks {
 	generateLexer {
 		sourceFile = file("src/main/grammar/Fgd.flex")
-		targetOutputDir = file("src/main/gen/org/intellij/sdk/language")
+		targetOutputDir = file("src/main/gen/lexer/org/intellij/sdk/language")
 		purgeOldFiles = true
 	}
 
 	generateParser {
 		sourceFile = file("src/main/grammar/Fgd.bnf")
-		targetRootOutputDir = file("src/main/gen")
+		targetRootOutputDir = file("src/main/gen/parser")
 		pathToParser = "org/org/intellij/sdk/language/parser/FgdParser.java"
 		pathToPsiRoot = "org/intellij/sdk/language/psi"
 		purgeOldFiles = true
@@ -57,8 +57,8 @@ tasks {
 	withType<JavaCompile> {
 		sourceCompatibility = JavaVersion.VERSION_17.toString()
 		targetCompatibility = JavaVersion.VERSION_17.toString()
-		dependsOn(generateLexer, generateParser)
 	}
+
 	withType<KotlinCompile> {
 		kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
 		dependsOn(generateLexer, generateParser)
