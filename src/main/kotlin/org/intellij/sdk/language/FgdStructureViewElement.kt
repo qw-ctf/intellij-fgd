@@ -1,11 +1,14 @@
 package org.intellij.sdk.language
 
 import com.intellij.icons.AllIcons
+import com.intellij.ide.projectView.PresentationData
 import com.intellij.ide.structureView.StructureViewTreeElement
 import com.intellij.ide.structureView.impl.common.PsiTreeElementBase
 import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.psi.util.nextLeaf
 import com.intellij.util.containers.toMutableSmartList
 import org.intellij.sdk.language.psi.FgdClassDefinition
 import org.intellij.sdk.language.psi.FgdField
@@ -18,7 +21,8 @@ class FgdStructureViewElement(e: PsiElement) : PsiTreeElementBase<PsiElement?>(e
 			is FgdClassDefinition -> elem.className.literal.text + " : " + elem.literal.text
 			is FgdField -> elem.firstChild.let { field ->
 				val name = field.firstChild.firstChild.text
-				val typ = field.firstChild.nextSibling.nextSibling.text
+				val typ = field.firstChild.nextLeaf { leaf -> leaf !is PsiWhiteSpace }?.nextSibling?.text ?:
+					throw IllegalStateException("Type for field $name not found")
 				"$name : $typ"
 			}
 
@@ -27,7 +31,7 @@ class FgdStructureViewElement(e: PsiElement) : PsiTreeElementBase<PsiElement?>(e
 	}
 
 	override fun getPresentation(): ItemPresentation {
-		return object : ItemPresentation {
+		return object : PresentationData() {
 			override fun getPresentableText(): String = this@FgdStructureViewElement.presentableText
 
 			override fun getLocationString(): String? = null

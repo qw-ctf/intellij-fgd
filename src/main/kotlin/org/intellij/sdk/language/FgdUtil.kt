@@ -50,17 +50,4 @@ object FgdUtil {
 		}
 		return result
 	}
-
-	fun findDocumentationComment(property: FgdClassName): String {
-		val result: MutableList<String> = LinkedList()
-		var element: PsiElement = property.prevSibling
-		while (element is PsiComment || element is PsiWhiteSpace) {
-			if (element is PsiComment) {
-				val commentText = element.getText().replaceFirst("[!# ]+".toRegex(), "")
-				result.add(commentText)
-			}
-			element = element.prevSibling
-		}
-		return StringUtil.join(Lists.reverse(result), "\n ")
-	}
 }

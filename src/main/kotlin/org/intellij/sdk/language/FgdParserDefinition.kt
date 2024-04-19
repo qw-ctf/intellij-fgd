@@ -22,7 +22,12 @@ internal class FgdParserDefinition : ParserDefinition {
 	override fun createParser(project: Project): PsiParser = FgdParser()
 	override fun getFileNodeType(): IFileElementType = FILE
 	override fun createFile(viewProvider: FileViewProvider): PsiFile = FgdFile(viewProvider)
-	override fun createElement(node: ASTNode): PsiElement = FgdTypes.Factory.createElement(node)
+	override fun createElement(node: ASTNode): PsiElement {
+		if (node.elementType == FgdTypes.LITERAL && node.firstChildNode.text == "base") {
+			println("hello base $node, could create some FgdBaseAttribute here, but really want to create FgdReference for the LITERALs under param_literals instead")
+		}
+		return FgdTypes.Factory.createElement(node)
+	}
 }
 
 val FILE: IFileElementType = IFileElementType(FgdLanguage)

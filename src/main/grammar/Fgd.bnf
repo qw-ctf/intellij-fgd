@@ -71,11 +71,15 @@ class_name ::= LITERAL {
 
 class_definition ::= AT LITERAL attribute* EQ class_name (COLON doc)? LBRACKET field* RBRACKET
 
-attribute ::= LITERAL LPAR (param_number3 | param_literals | param_dicts) RPAR
+attribute ::= LITERAL LPAR (param_number3 | param_references | param_dicts) RPAR
 
 number3 ::= number number number
 param_number3 ::= number3 (COMMA number3)*
-param_literals ::= LITERAL (COMMA LITERAL)*
+param_reference ::= LITERAL {
+    mixin="org.intellij.sdk.language.FgdReferenceMixin"
+    methods=[getName setName getNameIdentifier]
+}
+param_references ::= param_reference (COMMA param_reference)*
 param_dicts ::= (advanced_model_attribute | simple_model_attribute)
 
 match_field ::= LITERAL
