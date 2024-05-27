@@ -19,15 +19,15 @@ internal class FgdCompletionContributor : CompletionContributor() {
 			object : CompletionProvider<CompletionParameters?>() {
 				override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet) {
 					result.addElement(
-						LookupElementBuilder.create("BaseClass")
+						LookupElementBuilder.create("BaseClass").withCaseSensitivity(false)
 							.withIcon(AllIcons.Nodes.AbstractClass),
 					)
 					result.addElement(
-						LookupElementBuilder.create("PointClass")
+						LookupElementBuilder.create("PointClass").withCaseSensitivity(false)
 							.withIcon(AllIcons.Nodes.Class),
 					)
 					result.addElement(
-						LookupElementBuilder.create("SolidClass")
+						LookupElementBuilder.create("SolidClass").withCaseSensitivity(false)
 							.withIcon(AllIcons.Nodes.Class),
 					)
 				}

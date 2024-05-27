@@ -8,9 +8,11 @@ import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.psi.util.childrenOfType
 import com.intellij.psi.util.nextLeaf
 import com.intellij.util.containers.toMutableSmartList
 import org.intellij.sdk.language.psi.FgdClassDefinition
+import org.intellij.sdk.language.psi.FgdDoc
 import org.intellij.sdk.language.psi.FgdField
 import org.intellij.sdk.language.psi.FgdFile
 
@@ -35,6 +37,14 @@ class FgdStructureViewElement(e: PsiElement) : PsiTreeElementBase<PsiElement?>(e
 			override fun getPresentableText(): String = this@FgdStructureViewElement.presentableText
 
 			override fun getLocationString(): String? = null
+
+			override fun getTooltip(): String? = "korv" /*this@FgdStructureViewElement.element.let { elem ->
+				when (elem) {
+					is FgdClassDefinition -> elem.childrenOfType<FgdDoc>().firstOrNull()?.text
+					is FgdField -> elem.childrenOfType<FgdDoc>().firstOrNull()?.text
+					else -> null
+				}
+			}*/
 
 			override fun getIcon(unused: Boolean): javax.swing.Icon = this@FgdStructureViewElement.element.let { elem ->
 				when (elem) {

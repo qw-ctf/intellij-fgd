@@ -20,6 +20,12 @@
         <lang.syntaxHighlighterFactory
                 language="fgd"
                 implementationClass="org.intellij.sdk.language.FgdSyntaxHighlighterFactory"/>
+        <lang.foldingBuilder
+                language="fgd"
+                implementationClass="org.intellij.sdk.language.FgdFoldingBuilder"/>
+        <lang.formatter
+                language="fgd"
+                implementationClass="org.intellij.sdk.language.FgdFormattingModelBuilder"/>
         <lang.documentationProvider
                 language="fgd"
                 implementationClass="org.intellij.sdk.language.FgdDocumentationProvider"/>

@@ -39,17 +39,17 @@
     INTEGER='regexp:-?[0-9]+'
     FLOAT='regexp:-?[0-9]+(\.[0-9]+)?'
 
-    STRING_TYPE='regexp:string'
-    INTEGER_TYPE='regexp:integer'
-    FLOAT_TYPE='regexp:float'
-    CHOICES_TYPE='regexp:[Cc]hoices'
-    COLOR_TYPE='regexp:color255'
-    TARGET_SRC_TYPE='regexp:target_source'
-    TARGET_DST_TYPE='regexp:target_destination'
+    STRING_TYPE='regexp:(?i)string'
+    INTEGER_TYPE='regexp:(?i)integer'
+    FLOAT_TYPE='regexp:(?i)float'
+    CHOICES_TYPE='regexp:(?i)choices'
+    COLOR_TYPE='regexp:(?i)color255'
+    TARGET_SRC_TYPE='regexp:(?i)target_source'
+    TARGET_DST_TYPE='regexp:(?i)target_destination'
 
     // BASE_ATTR='regexp:base'
 
-    FLAGS_TYPE='regexp:[Ff]lags'
+    FLAGS_TYPE='regexp:(?i)flags'
     LITERAL='regexp:[_a-zA-Z][_a-zA-Z0-9]*'
   ]
 }
