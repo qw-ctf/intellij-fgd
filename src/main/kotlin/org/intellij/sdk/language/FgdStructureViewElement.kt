@@ -20,7 +20,7 @@ class FgdStructureViewElement(e: PsiElement) : PsiTreeElementBase<PsiElement?>(e
 	override fun getPresentableText(): String = element.let { elem ->
 		when (elem) {
 			is FgdFile -> elem.name
-			is FgdClassDefinition -> elem.className.literal.text + " : " + elem.literal.text
+			is FgdClassDefinition -> elem.className.literal.text + " : " + elem.classVariant.text
 			is FgdField -> elem.firstChild.let { field ->
 				val name = field.firstChild.firstChild.text
 				val typ = field.firstChild.nextLeaf { leaf -> leaf !is PsiWhiteSpace }?.nextSibling?.text ?:

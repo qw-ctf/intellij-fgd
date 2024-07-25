@@ -61,6 +61,7 @@ tasks {
 
 	withType<KotlinCompile> {
 		kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+		// Unfortunately not compatible with two pass generation which is needed for mixins
 		dependsOn(generateLexer, generateParser)
 	}
 

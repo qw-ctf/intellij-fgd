@@ -14,13 +14,13 @@ import java.util.Objects
 class FgdChooseByNameContributor : ChooseByNameContributorEx {
 	override fun processNames(processor: Processor<in String>, scope: GlobalSearchScope, filter: IdFilter?) {
 		val project: Project? = Objects.requireNonNull(scope.project)
-		val propertyKeys: List<String> = FgdUtil.findProperties(project).map(FgdClassName::getText)
+		val propertyKeys: List<String> = FgdUtil.findClassName(project).map(FgdClassName::getText)
 		ContainerUtil.process(propertyKeys, processor)
 	}
 
 	override fun processElementsWithName(name: String, processor: Processor<in NavigationItem>, parameters: FindSymbolParameters) {
 		val properties: MutableList<NavigationItem> = ContainerUtil.map(
-			FgdUtil.findProperties(parameters.project, name),
+			FgdUtil.findClassName(parameters.project, name),
 		) { property -> property as NavigationItem }
 		ContainerUtil.process(properties, processor)
 	}

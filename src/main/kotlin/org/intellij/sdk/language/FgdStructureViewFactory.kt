@@ -25,6 +25,7 @@ class FgdStructureViewFactory : PsiStructureViewFactory {
 				return FgdStructureViewModel(editor, psiFile)
 			}
 
+			/*
 			override fun createStructureView(fileEditor: FileEditor?, project: Project): StructureView {
 				val view = super.createStructureView(fileEditor, project)
 
@@ -46,6 +47,7 @@ class FgdStructureViewFactory : PsiStructureViewFactory {
 				)
 				return view
 			}
+			 */
 		}
 	}
 }

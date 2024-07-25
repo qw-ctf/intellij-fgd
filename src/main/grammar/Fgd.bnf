@@ -14,7 +14,7 @@
   elementTypeClass="org.intellij.sdk.language.psi.FgdElementType"
   tokenTypeClass="org.intellij.sdk.language.psi.FgdTokenType"
 
-  psiImplUtilClass="org.intellij.sdk.language.psi.impl.FgdPsiImplUtil"
+  //psiImplUtilClass="org.intellij.sdk.language.psi.impl.FgdPsiImplUtil"
 
   tokens=[
     COMMA=","
@@ -65,20 +65,23 @@ doc ::= STRING
 description ::= STRING
 
 class_name ::= LITERAL {
-    mixin="org.intellij.sdk.language.FgdSymbolMixin"
-    methods=[getName setName getNameIdentifier]
+    implements="com.intellij.psi.PsiNameIdentifierOwner"
+    mixin="org.intellij.sdk.language.psi.impl.FgdSymbolMixinImpl"
 }
 
-class_definition ::= AT LITERAL attribute* EQ class_name (COLON doc)? LBRACKET field* RBRACKET
+class_variant ::= AT LITERAL
+
+class_definition ::= class_variant attribute* EQ class_name (COLON doc)? LBRACKET field* RBRACKET
 
 attribute ::= LITERAL LPAR (param_number3 | param_references | param_dicts) RPAR
 
 number3 ::= number number number
 param_number3 ::= number3 (COMMA number3)*
-param_reference ::= LITERAL {
-    mixin="org.intellij.sdk.language.FgdReferenceMixin"
-    methods=[getName setName getNameIdentifier]
+param_reference ::= LITERAL /* {
+    implements="com.intellij.psi.PsiReference"
+    mixin="org.intellij.sdk.language.psi.impl.FgdReferenceMixinImpl"
 }
+*/
 param_references ::= param_reference (COMMA param_reference)*
 param_dicts ::= (advanced_model_attribute | simple_model_attribute)
 
@@ -95,7 +98,10 @@ pairs ::= pair (COMMA pair)*
 simple_model_attribute ::= LCURL pairs RCURL
 
 field_name ::= LITERAL
-field ::= string_field | integer_field | float_field | choices_field | flags_field | color_field | target_src_field | target_dst_field
+field ::= string_field | integer_field | float_field | choices_field | flags_field | color_field | target_src_field | target_dst_field {
+    implements="org.intellij.sdk.language.psi.FgdFieldMixin"
+    mixin="org.intellij.sdk.language.psi.impl.FgdFieldMixinImpl"
+}
 
 string_default ::= STRING
 string_field ::= field_name LPAR STRING_TYPE RPAR COLON doc (COLON string_default? (COLON description)?)?
